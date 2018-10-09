@@ -10,7 +10,7 @@ namespace BinaryTree
     public class BinaryTree<T> : ICollection<T>, IEnumerable<T> where T : IComparable<T>
     {
         
-        private Node<T> head;
+        public Node<T> head;
 
         public int Count => throw new NotImplementedException();
 
@@ -23,17 +23,32 @@ namespace BinaryTree
             else
                 Insert(item);
         }
-        private IEnumerable<Node<T>> InOrderDepthTraversal(Node<T> node)
+        private IEnumerable<Node<T>> InOrderTraversal(Node<T> node)
         {
             if (node.left != null)
             {
-                foreach (Node<T> leftNode in InOrderDepthTraversal(node.left))
+                foreach (Node<T> leftNode in InOrderTraversal(node.left))
                     yield return leftNode;
             }
             yield return node;
             if (node.right != null)
             {
-                foreach (Node<T> rightNode in InOrderDepthTraversal(node.right))
+                foreach (Node<T> rightNode in InOrderTraversal(node.right))
+                    yield return rightNode;
+            }
+        }
+
+        public IEnumerable<Node<T>> InOrderTraversal()
+        {
+            if (head.left != null)
+            {
+                foreach (Node<T> leftNode in InOrderTraversal(head.left))
+                    yield return leftNode;
+            }
+            yield return head;
+            if (head.right != null)
+            {
+                foreach (Node<T> rightNode in InOrderTraversal(head.right))
                     yield return rightNode;
             }
         }
@@ -53,9 +68,11 @@ namespace BinaryTree
             throw new NotImplementedException();
         }
 
+        
+
         public IEnumerator<T> GetEnumerator()
         {
-            foreach (Node<T> temp in InOrderDepthTraversal(head))
+            foreach (Node<T> temp in InOrderTraversal(head))
             {
                 yield return temp.value;
             }
@@ -68,7 +85,7 @@ namespace BinaryTree
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            foreach (Node<T> temp in InOrderDepthTraversal(head))
+            foreach (Node<T> temp in InOrderTraversal(head))
             {
                 yield return temp.value;
             }

@@ -12,14 +12,15 @@ namespace Task2_BinaryTree
         //private float mark;
         public string StudentName { get; set; }
         public string TestName { get; set; }
+        private float mark;
         public DateTime TestDate { get; set; }
         public float Mark
         {
-            get { return Mark; }
+            get { return mark; }
             set
             {
                 if (value >= 0 && value <= 100)
-                    Mark = value;
+                    mark = value;
             }
         }
 
